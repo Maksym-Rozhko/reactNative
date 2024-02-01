@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, Image, Animated, TouchableOpacity } from 'react-native';
+import { View, Text, Image, Animated } from 'react-native';
 
 import styles from './ItemStyles';
+import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
 
 const basketImage = require('../../../assets/basket.png');
 const likeImage = require('../../../assets/like.png');
 
 interface ItemData {
+  id: string;
   title: string;
   isNew: boolean;
   image: string;
@@ -46,9 +48,13 @@ const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice,
       style={[styles.item, isHovered && styles.itemHovered, { transform: [{ scale: scaleValue }] }]}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}>
-      <TouchableOpacity style={styles.likeBox}>
+      <CustomPressable
+        style={styles.likeBox}
+        onPress={() => {
+          console.warn('Add to favorite');
+        }}>
         <Image style={styles.likeImage} source={likeImage} />
-      </TouchableOpacity>
+      </CustomPressable>
       <View style={styles.itemImageBox}>
         <Image
           style={styles.itemProduct}
@@ -73,10 +79,14 @@ const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice,
           <Text style={styles.description} numberOfLines={1}>
             {descriotion}
           </Text>
-          <TouchableOpacity style={styles.basketBox}>
+          <CustomPressable
+            style={styles.basketBox}
+            onPress={() => {
+              console.warn('Add to basket');
+            }}>
             <Image style={styles.basketImage} source={basketImage} />
             <Text style={styles.basketText}>Buy</Text>
-          </TouchableOpacity>
+          </CustomPressable>
         </View>
       </View>
     </Animated.View>
