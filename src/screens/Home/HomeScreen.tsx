@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, View, Image, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -145,6 +145,122 @@ const mockItemData: ItemData[] = [
   },
 ];
 
+const mockItemDataLocalRefresh: ItemData[] = [
+  {
+    id: '141793-21581',
+    title: 'Pizza 1 Refresh',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2150.jpg',
+    newPrice: '250$',
+    oldPrice: '150$',
+    descriotion:
+      'Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-21592',
+    title: 'Pizza 2 Refresh',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2160.jpg',
+    newPrice: '145$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-21573',
+    title: 'Pizza 3 Refresh',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2152.jpg',
+    newPrice: '135$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-21564',
+    title: 'Pizza 4 Refresh',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2158.jpg',
+    newPrice: '145$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-21555',
+    title: 'Pizza 2 Refresh',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2160.jpg',
+    newPrice: '145$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+];
+
+const mockItemDataLocalEnd: ItemData[] = [
+  {
+    id: '141793-215642',
+    title: 'Pizza 4 END',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2158.jpg',
+    newPrice: '145$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-215812',
+    title: 'Pizza 1 END',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2150.jpg',
+    newPrice: '250$',
+    oldPrice: '150$',
+    descriotion:
+      'Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-215552',
+    title: 'Pizza 2 END',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2160.jpg',
+    newPrice: '145$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-215732',
+    title: 'Pizza 3 END',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2152.jpg',
+    newPrice: '135$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+  {
+    id: '141793-215922',
+    title: 'Pizza 2 END',
+    isNew: true,
+    image:
+      'https://img.freepik.com/free-photo/top-view-pepperoni-pizza-with-mushroom-sausages-bell-pepper-olive-corn-black-wooden_141793-2160.jpg',
+    newPrice: '145$',
+    oldPrice: '100$',
+    descriotion:
+      'Long2 title2 long2 title2 long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title Long title long title long title',
+  },
+];
+
 const HomeScreen = () => {
   const [isSearching, setIsSearching] = useState(false);
   const [searchText, setSearchText] = useState('');
@@ -152,6 +268,9 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalFilterVisible, setModalFilterVisible] = useState(false);
   const [isNewChecked, setIsNewChecked] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isNewDataAdded, setIsNewDataAdded] = useState(false);
 
   const toggleCheckbox = () => {
     setIsNewChecked(!isNewChecked);
@@ -163,7 +282,12 @@ const HomeScreen = () => {
 
   useEffect(() => {
     const filterData = () => {
-      let filtered = mockItemData;
+      let filtered = [...mockItemData];
+
+      if (isNewDataAdded) {
+        filtered = [...mockItemData, ...mockItemDataLocalRefresh, ...mockItemDataLocalEnd];
+      }
+
       if (searchText !== '') {
         filtered = filtered.filter((item) => item.title.toLowerCase().includes(searchText.toLowerCase()));
       }
@@ -174,7 +298,37 @@ const HomeScreen = () => {
     };
 
     filterData();
-  }, [searchText, isNewChecked]);
+  }, [searchText, isNewChecked, isNewDataAdded, mockItemDataLocalRefresh, mockItemDataLocalEnd]);
+
+  const handleDataUpdate = useCallback((newData: ItemData[], prepend: boolean = false) => {
+    setFilteredData((prevFilteredData) => {
+      let updatedData;
+      if (prepend) {
+        updatedData = [...newData, ...prevFilteredData];
+      } else {
+        updatedData = [...prevFilteredData, ...newData];
+      }
+      return updatedData.filter((item, index, self) => index === self.findIndex((t) => t.id === item.id));
+    });
+  }, []);
+
+  const loadMoreData = useCallback(() => {
+    if (!loading) {
+      setLoading(true);
+      setTimeout(() => {
+        handleDataUpdate(mockItemDataLocalEnd);
+        setLoading(false);
+      }, 0);
+    }
+  }, [loading, handleDataUpdate, mockItemDataLocalEnd]);
+
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    setTimeout(() => {
+      handleDataUpdate(mockItemDataLocalRefresh, true);
+      setRefreshing(false);
+    }, 3000);
+  }, [handleDataUpdate, mockItemDataLocalRefresh]);
 
   return (
     <SafeAreaView style={homeStyles.safeArea}>
@@ -200,7 +354,10 @@ const HomeScreen = () => {
       <FlatList
         data={filteredData}
         renderItem={({ item }) => <Item itemData={item} />}
-        keyExtractor={(item) => item.id}
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        onEndReached={loadMoreData}
+        onEndReachedThreshold={0.1}
       />
       <CustomModal modalVisibleProp={modalVisible} setModalVisibleProp={setModalVisible} />
       <CustomModal modalVisibleProp={modalFilterVisible} setModalVisibleProp={setModalFilterVisible}>
