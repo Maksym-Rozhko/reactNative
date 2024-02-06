@@ -19,9 +19,11 @@ interface ItemData {
 
 interface ItemPropss {
   itemData: ItemData;
+  numberOfLines?: number;
+  styles?: object;
 }
 
-const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice, oldPrice, descriotion } }) => {
+const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice, oldPrice, descriotion }, numberOfLines = 1, styles: itemDetails }) => {
   const [isHovered, setIsHovered] = useState(false);
   const scaleValue = new Animated.Value(1);
 
@@ -45,7 +47,7 @@ const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice,
 
   return (
     <Animated.View
-      style={[styles.item, isHovered && styles.itemHovered, { transform: [{ scale: scaleValue }] }]}
+      style={[styles.item, isHovered && styles.itemHovered, { transform: [{ scale: scaleValue }] }, itemDetails]}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}>
       <CustomPressable
@@ -76,7 +78,7 @@ const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice,
           )}
         </View>
         <View style={styles.itemInfoBottom}>
-          <Text style={styles.description} numberOfLines={1}>
+          <Text style={styles.description} numberOfLines={numberOfLines}>
             {descriotion}
           </Text>
           <CustomPressable

@@ -21,7 +21,7 @@ interface ItemData {
   descriotion: string;
 }
 
-const mockItemData: ItemData[] = [
+export const mockItemData: ItemData[] = [
   {
     id: '141793-2158',
     title: 'Pizza 1',
