@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FlatList, View, Image, ImageSourcePropType, Share, Alert, TouchableOpacity, Dimensions } from 'react-native';
 
 import styles from './CarouselStyles';
-import DotIndicator from '../DotIndicator/DotIndicator';
+import DotIndicator from '../../components/DotIndicator/DotIndicator';
 
 const { width: screenWidth } = Dimensions.get('window');
 

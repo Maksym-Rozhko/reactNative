@@ -5,7 +5,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import homeStyles from './HomeScreenStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
 import { CustomModal } from '../../components/Modal/CustomModal';
-import { Item } from '../Item/Item';
+import { Item } from '../../components/Item/Item';
 
 const checkedImage = require('../../../assets/checked.png');
 const likeImage = require('../../../assets/like.png');

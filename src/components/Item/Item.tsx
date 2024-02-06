@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Image, Animated } from 'react-native';
 
 import styles from './ItemStyles';
-import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
+import { CustomPressable } from '../CustomPressable/CustomPressable';
 
 const basketImage = require('../../../assets/basket.png');
 const likeImage = require('../../../assets/like.png');
