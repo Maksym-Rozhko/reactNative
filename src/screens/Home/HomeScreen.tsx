@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 import homeStyles from './HomeScreenStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
-import { CustomModal } from '../../components/Modal/CustomModal';
 import { Item } from '../../components/Item/Item';
+import { CustomModal } from '../../components/Modal/CustomModal';
 
 const checkedImage = require('../../../assets/checked.png');
 const likeImage = require('../../../assets/like.png');
@@ -331,7 +331,7 @@ const HomeScreen = () => {
   }, [handleDataUpdate, mockItemDataLocalRefresh]);
 
   return (
-    <SafeAreaView style={homeStyles.safeArea}>
+    <View style={homeStyles.safeArea}>
       <View style={homeStyles.headerTop}>
         {!isSearching || (
           <TextInput
@@ -373,7 +373,7 @@ const HomeScreen = () => {
           <Text style={homeStyles.label}>Checkbox</Text>
         </TouchableOpacity>
       </CustomModal>
-    </SafeAreaView>
+    </View>
   );
 };
 

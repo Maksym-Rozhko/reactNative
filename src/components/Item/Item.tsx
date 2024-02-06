@@ -23,7 +23,11 @@ interface ItemPropss {
   styles?: object;
 }
 
-const Item: React.FC<ItemPropss> = ({ itemData: { title, isNew, image, newPrice, oldPrice, descriotion }, numberOfLines = 1, styles: itemDetails }) => {
+const Item: React.FC<ItemPropss> = ({
+  itemData: { title, isNew, image, newPrice, oldPrice, descriotion },
+  numberOfLines = 1,
+  styles: itemDetails,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
   const scaleValue = new Animated.Value(1);
 
