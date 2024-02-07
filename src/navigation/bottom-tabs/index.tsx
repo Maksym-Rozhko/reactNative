@@ -8,9 +8,9 @@ import { Pressable } from 'react-native';
 import { DrawerParamList } from '../drawer';
 import { HomeStackParamList } from '../native-stack';
 
-import { Carousel } from '@/screens/Carousel/Carousel';
-import { HomeScreen } from '@/screens/Home/HomeScreen';
-import { SettingsScreen } from '@/screens/Settings/Settings';
+import { Carousel } from '../../screens/Carousel/Carousel';
+import { HomeScreen } from '../../screens/Home/HomeScreen';
+import { SettingsScreen } from '../../screens/Settings/Settings';
 
 export type TabsGroupParamList = {
   Home: undefined;

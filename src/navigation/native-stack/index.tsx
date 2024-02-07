@@ -3,8 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TabsGroup, TabsGroupParamList } from '../bottom-tabs';
 
-import { ModalScreen } from '@/components/Modal/NavigatorModal';
-import { CardScreen } from '@/screens/Card/Card';
+import { ModalScreen } from '../../components/Modal/NavigatorModal';
+import { CardScreen } from '../../screens/Card/Card';
 
 export type HomeStackParamList = {
   TabsGroup: NavigatorScreenParams<TabsGroupParamList>;
