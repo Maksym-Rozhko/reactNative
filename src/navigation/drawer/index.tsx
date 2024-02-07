@@ -1,25 +1,29 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
-import { Carousel } from '../../screens/Carousel/Carousel';
 import { HomeScreen } from '../../screens/Home/HomeScreen';
 import { SettingsScreen } from '../../screens/Settings/Settings';
+import { TabsGroup } from '../bottom-tabs';
+import { HomeStackGroup, HomeStackParamList } from '../native-stack';
 
-const Drawer = createDrawerNavigator();
+export type DrawerParamList = {
+  Home: NavigatorScreenParams<HomeStackParamList>;
+  Products: undefined;
+  Settings: undefined;
+};
+
+const Drawer = createDrawerNavigator<DrawerParamList>();
 
 export const DrawerGroup = () => {
   return (
     <Drawer.Navigator
-      screenOptions={
-        {
-          // headerShown: false,
-        }
-      }>
+      screenOptions={{
+        headerShown: false,
+      }}>
       <Drawer.Screen
         name="Home"
-        component={Carousel}
-        options={{
-          headerTitle: '',
-        }}
+        // component={TabsGroup}
+        component={HomeStackGroup}
       />
       <Drawer.Screen name="Products" component={HomeScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />

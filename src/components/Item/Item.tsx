@@ -1,8 +1,12 @@
-import React, { useState } from 'react';
-import { View, Text, Image, Animated } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React from 'react';
+import { View, Text, Image } from 'react-native';
 
 import styles from './ItemStyles';
 import { CustomPressable } from '../CustomPressable/CustomPressable';
+
+import { HomeStackParamList } from '@/navigation/native-stack';
 
 const basketImage = require('../../../assets/basket.png');
 const likeImage = require('../../../assets/like.png');
@@ -28,32 +32,16 @@ const Item: React.FC<ItemPropss> = ({
   numberOfLines = 1,
   styles: itemDetails,
 }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const scaleValue = new Animated.Value(1);
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
 
-  const handleTouchStart = () => {
-    setIsHovered(true);
-    Animated.timing(scaleValue, {
-      toValue: 1.1,
-      duration: 100,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handleTouchEnd = () => {
-    setIsHovered(false);
-    Animated.timing(scaleValue, {
-      toValue: 1,
-      duration: 100,
-      useNativeDriver: true,
-    }).start();
+  const handlePressShowDetails = () => {
+    navigation.navigate('Product', {
+      item: { id: 'testId', title, isNew, image, newPrice, oldPrice, descriotion },
+    });
   };
 
   return (
-    <Animated.View
-      style={[styles.item, isHovered && styles.itemHovered, { transform: [{ scale: scaleValue }] }, itemDetails]}
-      onTouchStart={handleTouchStart}
-      onTouchEnd={handleTouchEnd}>
+    <CustomPressable style={[styles.item, itemDetails]} onPress={() => handlePressShowDetails()}>
       <CustomPressable
         style={styles.likeBox}
         onPress={() => {
@@ -95,7 +83,7 @@ const Item: React.FC<ItemPropss> = ({
           </CustomPressable>
         </View>
       </View>
-    </Animated.View>
+    </CustomPressable>
   );
 };
 

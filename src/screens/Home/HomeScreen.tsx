@@ -1,4 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useScrollToTop, useFocusEffect } from '@react-navigation/native';
+import React, { useCallback, useEffect, useRef, useState, RefObject } from 'react';
 import { FlatList, View, Image, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
@@ -268,9 +269,20 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalFilterVisible, setModalFilterVisible] = useState(false);
   const [isNewChecked, setIsNewChecked] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isNewDataAdded, setIsNewDataAdded] = useState(false);
+  const flatListRef: RefObject<FlatList<ItemData>> = useRef(null);
+
+  useScrollToTop(flatListRef);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (flatListRef.current) {
+        flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+      }
+    }, [flatListRef.current]),
+  );
 
   const toggleCheckbox = () => {
     setIsNewChecked(!isNewChecked);
@@ -352,6 +364,7 @@ const HomeScreen = () => {
         <Text style={homeStyles.filterBtnText}>Show Filter</Text>
       </CustomPressable>
       <FlatList
+        ref={flatListRef}
         data={filteredData}
         renderItem={({ item }) => <Item itemData={item} />}
         refreshing={refreshing}

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   carouselContainer: {
     flex: 1,
     flexDirection: 'column',
-    paddingBottom: 70,
+    paddingBottom: 20,
     marginTop: 20,
   },
   imageWrapper: {
