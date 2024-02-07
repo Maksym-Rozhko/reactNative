@@ -1,4 +1,5 @@
-import { useScrollToTop, useFocusEffect } from '@react-navigation/native';
+import { useScrollToTop, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useRef, useState, RefObject } from 'react';
 import { FlatList, View, Image, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -7,6 +8,8 @@ import homeStyles from './HomeScreenStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
 import { Item } from '../../components/Item/Item';
 import { CustomModal } from '../../components/Modal/CustomModal';
+
+import { HomeStackParamList } from '@/navigation/native-stack';
 
 const checkedImage = require('../../../assets/checked.png');
 const likeImage = require('../../../assets/like.png');
@@ -273,7 +276,7 @@ const HomeScreen = () => {
   const [loading, setLoading] = useState(false);
   const [isNewDataAdded, setIsNewDataAdded] = useState(false);
   const flatListRef: RefObject<FlatList<ItemData>> = useRef(null);
-
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   useScrollToTop(flatListRef);
 
   useFocusEffect(
@@ -343,7 +346,7 @@ const HomeScreen = () => {
   }, [handleDataUpdate, mockItemDataLocalRefresh]);
 
   return (
-    <View style={homeStyles.safeArea}>
+    <SafeAreaView style={homeStyles.safeArea}>
       <View style={homeStyles.headerTop}>
         {!isSearching || (
           <TextInput
@@ -353,7 +356,7 @@ const HomeScreen = () => {
             placeholder="Search..."
           />
         )}
-        <CustomPressable onPress={() => setModalVisible(true)}>
+        <CustomPressable onPress={() => navigation.navigate('ModalScreen')}>
           <Image style={homeStyles.likeImage} source={likeImage} />
         </CustomPressable>
         <CustomPressable style={homeStyles.searchBtn} onPress={handleToggleSearch}>
@@ -386,7 +389,7 @@ const HomeScreen = () => {
           <Text style={homeStyles.label}>Checkbox</Text>
         </TouchableOpacity>
       </CustomModal>
-    </View>
+    </SafeAreaView>
   );
 };
 

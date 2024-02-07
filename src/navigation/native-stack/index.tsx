@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { TabsGroup, TabsGroupParamList } from '../bottom-tabs';
 
+import { ModalScreen } from '@/components/Modal/NavigatorModal';
 import { CardScreen } from '@/screens/Card/Card';
 
 export type HomeStackParamList = {
@@ -18,6 +19,7 @@ export type HomeStackParamList = {
       descriotion: string;
     };
   };
+  ModalScreen: undefined;
 };
 
 export const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -25,7 +27,13 @@ export const HomeStack = createNativeStackNavigator<HomeStackParamList>();
 export const HomeStackGroup = () => {
   return (
     <HomeStack.Navigator screenOptions={{ headerShown: true }}>
-      <HomeStack.Screen name="TabsGroup" component={TabsGroup} options={{ headerShown: false }} />
+      <HomeStack.Screen
+        name="TabsGroup"
+        component={TabsGroup}
+        options={{
+          headerShown: false,
+        }}
+      />
       <HomeStack.Screen
         name="Product"
         component={CardScreen}
@@ -34,6 +42,7 @@ export const HomeStackGroup = () => {
           headerTitle: 'Product Details',
         }}
       />
+      <HomeStack.Screen name="ModalScreen" component={ModalScreen} options={{ presentation: 'modal' }} />
     </HomeStack.Navigator>
   );
 };

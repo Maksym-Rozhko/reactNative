@@ -36,12 +36,6 @@ export const TabsGroup = ({ navigation }: Props) => {
         name="Home"
         component={Carousel}
         options={{
-          headerTitle: '',
-          headerLeft: () => (
-            <Pressable onPress={navigation.openDrawer}>
-              <Entypo name="menu" size={24} color="black" />
-            </Pressable>
-          ),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={color} />
           ),
@@ -51,6 +45,12 @@ export const TabsGroup = ({ navigation }: Props) => {
         name="Products"
         component={HomeScreen}
         options={{
+          headerTitle: '',
+          headerLeft: () => (
+            <Pressable onPress={navigation.openDrawer}>
+              <Entypo name="menu" size={24} color="black" />
+            </Pressable>
+          ),
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? 'storefront' : 'storefront-outline'} size={size} color={color} />
           ),
