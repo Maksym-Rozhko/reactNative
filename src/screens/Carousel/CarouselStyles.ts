@@ -6,16 +6,17 @@ const styles = StyleSheet.create({
   carouselContainer: {
     flex: 1,
     flexDirection: 'column',
-    paddingBottom: 70,
+    paddingBottom: 20,
+    marginTop: 20,
   },
   imageWrapper: {
-    margin: 20,
+    marginHorizontal: 20,
   },
   image: {
     width: screenWidth - 40,
     height: screenHeight - 40,
     maxWidth: '100%',
-    resizeMode: 'contain',
+    // resizeMode: 'contain',
   },
 });
 

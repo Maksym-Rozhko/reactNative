@@ -1,11 +1,15 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useScrollToTop, useFocusEffect, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import React, { useCallback, useEffect, useRef, useState, RefObject } from 'react';
 import { FlatList, View, Image, TextInput, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import homeStyles from './HomeScreenStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
+import { Item } from '../../components/Item/Item';
 import { CustomModal } from '../../components/Modal/CustomModal';
-import { Item } from '../Item/Item';
+
+import { HomeStackParamList } from '@/navigation/native-stack';
 
 const checkedImage = require('../../../assets/checked.png');
 const likeImage = require('../../../assets/like.png');
@@ -21,7 +25,7 @@ interface ItemData {
   descriotion: string;
 }
 
-const mockItemData: ItemData[] = [
+export const mockItemData: ItemData[] = [
   {
     id: '141793-2158',
     title: 'Pizza 1',
@@ -268,9 +272,20 @@ const HomeScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalFilterVisible, setModalFilterVisible] = useState(false);
   const [isNewChecked, setIsNewChecked] = useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isNewDataAdded, setIsNewDataAdded] = useState(false);
+  const flatListRef: RefObject<FlatList<ItemData>> = useRef(null);
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  useScrollToTop(flatListRef);
+
+  useFocusEffect(
+    useCallback(() => {
+      if (flatListRef.current) {
+        flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
+      }
+    }, [flatListRef.current]),
+  );
 
   const toggleCheckbox = () => {
     setIsNewChecked(!isNewChecked);
@@ -341,7 +356,7 @@ const HomeScreen = () => {
             placeholder="Search..."
           />
         )}
-        <CustomPressable onPress={() => setModalVisible(true)}>
+        <CustomPressable onPress={() => navigation.navigate('ModalScreen')}>
           <Image style={homeStyles.likeImage} source={likeImage} />
         </CustomPressable>
         <CustomPressable style={homeStyles.searchBtn} onPress={handleToggleSearch}>
@@ -352,6 +367,7 @@ const HomeScreen = () => {
         <Text style={homeStyles.filterBtnText}>Show Filter</Text>
       </CustomPressable>
       <FlatList
+        ref={flatListRef}
         data={filteredData}
         renderItem={({ item }) => <Item itemData={item} />}
         refreshing={refreshing}

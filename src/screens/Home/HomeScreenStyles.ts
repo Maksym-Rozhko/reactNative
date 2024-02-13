@@ -3,15 +3,15 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    margin: 20,
+    marginHorizontal: 20,
   },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    gap: 20,
-    margin: 20,
-  },
+  // container: {
+  //   flex: 1,
+  //   alignItems: 'center',
+  //   justifyContent: 'flex-start',
+  //   gap: 20,
+  //   margin: 20,
+  // },
   headerTop: {
     display: 'flex',
     justifyContent: 'flex-end',
