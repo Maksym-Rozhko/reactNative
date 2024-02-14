@@ -26,4 +26,4 @@ const getOrientation = ({ width, height }: ScaledSize): Orientation => {
   return width > height ? 'landscape' : 'portrait';
 };
 
-export default useOrientation;
+export { useOrientation };
