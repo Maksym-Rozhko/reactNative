@@ -1,9 +1,8 @@
-import 'react-native-gesture-handler';
-
 // import { Navigation } from '@/navigation';
 import React, { useCallback } from 'react';
 import { View, Text, TextInput, Button } from 'react-native';
 
+import { useApi } from '@/hooks/useApi';
 import { useBackHandler } from '@/hooks/useBackHandler';
 import { useKeyboard } from '@/hooks/useKeyboard';
 import { useOrientation } from '@/hooks/useOrientation';
@@ -27,6 +26,8 @@ export default function App() {
 
   useBackHandler(handleBack);
 
+  const { data: postData, error, isLoading } = useApi('https://jsonplaceholder.typicode.com/posts/1');
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>{`Orientation: ${orientation}`}</Text>
@@ -43,6 +44,17 @@ export default function App() {
       )}
       <Button title="Refresh" onPress={onRefresh} disabled={isRefreshing} />
       {isRefreshing && <Text>Оновлення...</Text>}
+
+      {isLoading && <Text>Оновлення...</Text>}
+      {error && <Text>Error: {error['message']}</Text>}
+      {postData && (
+        <View>
+          <Text>Post:</Text>
+          <Text>{`ID: ${postData['id']}`}</Text>
+          <Text>{`Title: ${postData['title']}`}</Text>
+          <Text>{`Body: ${postData['body']}`}</Text>
+        </View>
+      )}
     </View>
 
     // <Navigation />
