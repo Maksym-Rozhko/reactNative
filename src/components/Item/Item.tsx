@@ -41,7 +41,7 @@ const Item: React.FC<ItemPropss> = ({
   };
 
   return (
-    <CustomPressable style={[styles.item, itemDetails]} onPress={() => handlePressShowDetails()}>
+    <CustomPressable style={[styles.item, itemDetails]} onPress={handlePressShowDetails}>
       <CustomPressable
         style={styles.likeBox}
         onPress={() => {

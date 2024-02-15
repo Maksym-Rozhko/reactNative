@@ -13,7 +13,7 @@ type Props = NativeStackScreenProps<HomeStackParamList, 'ModalScreen'>;
 const ModalScreen = ({ navigation }: Props) => {
   return (
     <View style={styles.container}>
-      <CustomPressable style={styles.closeButton} onPress={() => navigation.goBack()}>
+      <CustomPressable style={styles.closeButton} onPress={navigation.goBack}>
         <Text style={styles.closeButtonText}>X</Text>
       </CustomPressable>
       <Text style={styles.screenTitle}>Wish List</Text>

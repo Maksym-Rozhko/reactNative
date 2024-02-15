@@ -8,7 +8,7 @@ const config: ExpoConfig = {
   name: 'my-app',
   slug: 'my-app',
   version: '1.0.0',
-  orientation: 'portrait',
+  orientation: 'default',
   icon: './assets/icon.png',
   userInterfaceStyle: 'automatic',
   splash: {
