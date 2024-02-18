@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 import { Text, View, useColorScheme, Switch } from 'react-native';
 
 import styles from './SettingsStyles';
@@ -9,6 +10,10 @@ const SettingsScreen = observer(() => {
   const { ui } = useRootStore();
   const isDark = useColorScheme() === 'dark';
   const screenTitleStyle = [styles.screenTitle, { color: isDark ? '#fff' : '#000' }];
+
+  useEffect(() => {
+    ui.fetchUser({});
+  }, [ui]);
 
   return (
     <View style={styles.container}>

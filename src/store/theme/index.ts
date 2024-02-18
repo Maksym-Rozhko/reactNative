@@ -1,17 +1,26 @@
-import { makeAutoObservable } from 'mobx';
+import { flow, types } from 'mobx-state-tree';
 
-export type ColorTheme = 'light' | 'dark';
+import { User } from '@/api';
+import JSONPlaceholder from '@/api/JSONPlaceholder/JSONPlaceholder';
 
-class ThemeStore {
-  constructor() {
-    makeAutoObservable(this);
-  }
+const ThemeStore = types
+  .model('ThemeStore', {
+    theme: types.optional(types.union(types.literal('light'), types.literal('dark')), 'light'),
+  })
+  .actions((self) => ({
+    setTheme(theme: typeof self.theme) {
+      self.theme = theme;
+    },
+    fetchUser: flow(function* fetchUser({ signal, userId = 1 } = {}): Generator<Promise<User>, User, Awaited<User>> {
+      {
+        const user = yield JSONPlaceholder.getUser({
+          signal,
+          userId,
+        });
 
-  theme: ColorTheme = 'light';
+        return user;
+      }
+    }),
+  }));
 
-  setTheme = (theme: ColorTheme) => {
-    this.theme = theme;
-  };
-}
-
-export default new ThemeStore();
+export default ThemeStore;
