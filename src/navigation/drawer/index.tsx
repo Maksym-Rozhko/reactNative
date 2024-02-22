@@ -2,6 +2,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigatorScreenParams } from '@react-navigation/native';
 
 import { HomeScreen } from '../../screens/Home/HomeScreen';
+import { ProfileScreen } from '../../screens/Profile/Profile';
 import { SettingsScreen } from '../../screens/Settings/Settings';
 import { TabsGroup } from '../bottom-tabs';
 import { HomeStackGroup, HomeStackParamList } from '../native-stack';
@@ -9,6 +10,7 @@ import { HomeStackGroup, HomeStackParamList } from '../native-stack';
 export type DrawerParamList = {
   Home: NavigatorScreenParams<HomeStackParamList>;
   Products: undefined;
+  Profile: undefined;
   Settings: undefined;
 };
 
@@ -26,6 +28,7 @@ export const DrawerGroup = () => {
         component={HomeStackGroup}
       />
       <Drawer.Screen name="Products" component={HomeScreen} />
+      <Drawer.Screen name="Profile" component={ProfileScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
     </Drawer.Navigator>
   );

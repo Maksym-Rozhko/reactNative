@@ -5,17 +5,16 @@ import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
 
-import { DrawerParamList } from '../drawer';
-import { HomeStackParamList } from '../native-stack';
-
 import { Carousel } from '../../screens/Carousel/Carousel';
 import { HomeScreen } from '../../screens/Home/HomeScreen';
-import { SettingsScreen } from '../../screens/Settings/Settings';
+import { ProfileScreen } from '../../screens/Profile/Profile';
+import { DrawerParamList } from '../drawer';
+import { HomeStackParamList } from '../native-stack';
 
 export type TabsGroupParamList = {
   Home: undefined;
   Products: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
 const Tab = createBottomTabNavigator<TabsGroupParamList>();
@@ -57,11 +56,11 @@ export const TabsGroup = ({ navigation }: Props) => {
         }}
       />
       <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
+        name="Profile"
+        component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'settings' : 'settings-sharp'} size={size} color={color} />
+            <Ionicons name={focused ? 'person' : 'person-sharp'} size={size} color={color} />
           ),
           //   tabBarBadge: 3,
         }}

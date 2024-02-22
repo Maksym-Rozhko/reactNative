@@ -1,79 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import {
-  FlatList,
-  View,
-  Image,
-  ImageSourcePropType,
-  Share,
-  Alert,
-  TouchableOpacity,
-  Dimensions,
-  Text,
-} from 'react-native';
+import { FlatList, View, Image, Share, Alert, TouchableOpacity, Dimensions } from 'react-native';
 
 import styles from './CarouselStyles';
 import DotIndicator from '../../components/DotIndicator/DotIndicator';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { CarouselData } from '../../store/carousel/carouselSlice';
 
 const { width: screenWidth } = Dimensions.get('window');
-
-const mockCarouselData: CarouselData[] = [
-  {
-    id: '141793-2151',
-    image: require('../../../assets/carousel/01.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2152',
-    image: require('../../../assets/carousel/02.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2153',
-    image: require('../../../assets/carousel/03.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2154',
-    image: require('../../../assets/carousel/04.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2155',
-    image: require('../../../assets/carousel/05.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2156',
-    image: require('../../../assets/carousel/06.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2157',
-    image: require('../../../assets/carousel/07.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2158',
-    image: require('../../../assets/carousel/08.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2159',
-    image: require('../../../assets/carousel/09.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-  {
-    id: '141793-2110',
-    image: require('../../../assets/carousel/10.jpg'),
-    shareUrl: 'https://pixabay.com/',
-  },
-];
-
-interface CarouselData {
-  id: string;
-  image: ImageSourcePropType;
-  shareUrl: string;
-}
 
 const onShare = async (url: string) => {
   try {
@@ -96,10 +29,12 @@ const Carousel = () => {
   const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
   const flatListRef = useRef<FlatList>(null);
 
+  const carouselData = useAppSelector((state) => state.carouselImages);
+
   useEffect(() => {
     const handleScroll = () => {
       if (autoScrollEnabled) {
-        const nextIndex = (currentSlideIndex + 1) % mockCarouselData.length;
+        const nextIndex = (currentSlideIndex + 1) % carouselData.length;
         setCurrentSlideIndex(nextIndex);
         flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
       }
@@ -127,7 +62,7 @@ const Carousel = () => {
         horizontal
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        data={mockCarouselData}
+        data={carouselData}
         renderItem={({ item }) => <Item id={item.id} image={item.image} shareUrl={item.shareUrl} />}
         onMomentumScrollEnd={(event) => {
           const slideIndex = Math.floor(event.nativeEvent.contentOffset.x / screenWidth);
@@ -135,7 +70,7 @@ const Carousel = () => {
           setAutoScrollEnabled(true);
         }}
       />
-      <DotIndicator slides={mockCarouselData.length} currentIndex={currentSlideIndex} onPress={handleDotPress} />
+      <DotIndicator slides={carouselData.length} currentIndex={currentSlideIndex} onPress={handleDotPress} />
     </View>
   );
 };
