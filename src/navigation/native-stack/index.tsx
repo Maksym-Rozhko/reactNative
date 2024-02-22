@@ -15,7 +15,7 @@ export type HomeStackParamList = {
       image: string;
       newPrice: string;
       oldPrice: string;
-      descriotion: string;
+      description: string;
     };
   };
   ModalScreen: undefined;

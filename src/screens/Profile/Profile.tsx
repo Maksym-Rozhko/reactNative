@@ -1,16 +1,24 @@
-import { observer } from 'mobx-react-lite';
-import { useEffect, useRef, useState } from 'react';
-import { Text, View } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { Text, TextInputProps, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
 import styles from './ProfileStyles';
+import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector';
+import {
+  fetchUserById,
+  selectorFirstName,
+  selectorFullName,
+  selectorLastName,
+  setFirstName,
+  setLastName,
+} from '../../store/user/userSlice';
 
-import { CustomPressable } from '@/components/CustomPressable/CustomPressable';
-import { useRootStore } from '@/context';
-
-const ProfileScreen = observer(() => {
+const ProfileScreen = () => {
   const [isEditing, setIsEditing] = useState(false);
   const firstInputRef = useRef<TextInput>(null);
+  const dispatch = useAppDispatch();
 
   const handleEditProfile = () => {
     setIsEditing(true);
@@ -22,9 +30,23 @@ const ProfileScreen = observer(() => {
     }
   }, [isEditing]);
 
-  const {
-    user: { firstName, lastName, fullName, setFirstName, setLastName },
-  } = useRootStore();
+  const firstName = useAppSelector(selectorFirstName);
+  const lastName = useAppSelector(selectorLastName);
+  const fullName = useAppSelector(selectorFullName);
+
+  const handleSetFirstNameChange: TextInputProps['onChangeText'] = (text) => dispatch(setFirstName(text));
+  const handleSetLastNameChange: TextInputProps['onChangeText'] = (text) => dispatch(setLastName(text));
+
+  useFocusEffect(
+    useCallback(() => {
+      const promise = dispatch(fetchUserById(1));
+
+      return () => {
+        promise.abort();
+      };
+    }, []),
+  );
+
   return (
     <View style={styles.container}>
       <Text style={styles.screenTitle}>Profile Screen</Text>
@@ -35,13 +57,13 @@ const ProfileScreen = observer(() => {
       <TextInput
         style={styles.input}
         value={firstName}
-        onChangeText={setFirstName}
+        onChangeText={handleSetFirstNameChange}
         editable={isEditing}
         ref={firstInputRef}
       />
-      <TextInput style={styles.input} value={lastName} onChangeText={setLastName} editable={isEditing} />
+      <TextInput style={styles.input} value={lastName} onChangeText={handleSetLastNameChange} editable={isEditing} />
     </View>
   );
-});
+};
 
 export { ProfileScreen };

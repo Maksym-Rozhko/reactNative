@@ -1,15 +1,15 @@
 import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from 'react-redux';
 
 import { DrawerGroup } from './drawer';
-
-import { RootStoreProvider } from '@/context';
+import { store } from '../store';
 
 export const Navigation = () => {
   return (
-    <RootStoreProvider>
+    <Provider store={store}>
       <NavigationContainer>
         <DrawerGroup />
       </NavigationContainer>
-    </RootStoreProvider>
+    </Provider>
   );
 };

@@ -1,26 +1,20 @@
-import { types, addMiddleware } from 'mobx-state-tree';
+import { configureStore } from '@reduxjs/toolkit';
+import logger from 'redux-logger';
 
-import ThemeStore from '@/store/theme';
-import UserStore from '@/store/user';
+import imagesReducer from '../store/carousel/carouselSlice';
+import productsReducer from '../store/products/productsSlice';
+import uiReducer from '../store/theme/themeSlice';
+import userReducer from '../store/user/userSlice';
 
-const RootStore = types.model('RootStore', {
-  ui: ThemeStore,
-  user: UserStore,
+export const store = configureStore({
+  reducer: {
+    ui: uiReducer,
+    user: userReducer,
+    carouselImages: imagesReducer,
+    products: productsReducer,
+  },
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 
-export const rootStore = RootStore.create({
-  ui: ThemeStore.create(),
-  user: UserStore.create({
-    firstName: 'Max',
-    lastName: 'Rozhko',
-  }),
-});
-
-addMiddleware(rootStore, (call, next) => {
-  console.log(`Action '${call.name}' invoked`);
-  return next(call);
-});
-
-// onSnapshot(rootStore, (snapshot) => {
-//   console.log(snapshot);
-// });
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

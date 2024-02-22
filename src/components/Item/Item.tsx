@@ -18,7 +18,7 @@ interface ItemData {
   image: string;
   newPrice: string;
   oldPrice: string;
-  descriotion: string;
+  description: string;
 }
 
 interface ItemPropss {
@@ -28,7 +28,7 @@ interface ItemPropss {
 }
 
 const Item: React.FC<ItemPropss> = ({
-  itemData: { title, isNew, image, newPrice, oldPrice, descriotion },
+  itemData: { title, isNew, image, newPrice, oldPrice, description },
   numberOfLines = 1,
   styles: itemDetails,
 }) => {
@@ -36,7 +36,7 @@ const Item: React.FC<ItemPropss> = ({
 
   const handlePressShowDetails = () => {
     navigation.navigate('Product', {
-      item: { id: 'testId', title, isNew, image, newPrice, oldPrice, descriotion },
+      item: { id: 'testId', title, isNew, image, newPrice, oldPrice, description },
     });
   };
 
@@ -71,7 +71,7 @@ const Item: React.FC<ItemPropss> = ({
         </View>
         <View style={styles.itemInfoBottom}>
           <Text style={styles.description} numberOfLines={numberOfLines}>
-            {descriotion}
+            {description}
           </Text>
           <CustomPressable
             style={styles.basketBox}

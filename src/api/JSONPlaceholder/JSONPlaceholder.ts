@@ -1,5 +1,5 @@
-import { API } from '@/api/API/API';
-import { FetchArgs } from '@/api/API/types';
+import { API } from '../../api/API/API';
+import { FetchArgs } from '../../api/API/types';
 
 const JSON_PLACEHOLDER_BASE_URL = 'https://jsonplaceholder.typicode.com';
 
