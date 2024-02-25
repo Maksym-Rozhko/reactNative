@@ -2,11 +2,14 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text, Image } from 'react-native';
+import Toast from 'react-native-toast-message';
+import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './ItemStyles';
+import { HomeStackParamList } from '../../navigation/native-stack';
+import { RootState } from '../../store';
+import { CartItem, addItemToCart } from '../../store/basket/basketSlice';
 import { CustomPressable } from '../CustomPressable/CustomPressable';
-
-import { HomeStackParamList } from '@/navigation/native-stack';
 
 const basketImage = require('../../../assets/basket.png');
 const likeImage = require('../../../assets/like.png');
@@ -28,16 +31,37 @@ interface ItemPropss {
 }
 
 const Item: React.FC<ItemPropss> = ({
-  itemData: { title, isNew, image, newPrice, oldPrice, description },
+  itemData: { id, title, isNew, image, newPrice, oldPrice, description },
   numberOfLines = 1,
   styles: itemDetails,
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: RootState) => state.basket.cartItems);
 
   const handlePressShowDetails = () => {
     navigation.navigate('Product', {
-      item: { id: 'testId', title, isNew, image, newPrice, oldPrice, description },
+      item: { id, title, isNew, image, newPrice, oldPrice, description },
     });
+  };
+
+  const handleAddToCart = (item: ItemData) => {
+    const existingItem = cartItems.find((cartItem) => cartItem.id === item.id);
+    if (existingItem) {
+      dispatch(addItemToCart(existingItem));
+      Toast.show({
+        type: 'success',
+        text1: 'Кiлькiсть одиниць оновлено',
+        visibilityTime: 2000,
+      });
+    } else {
+      dispatch(addItemToCart({ ...item, quantity: 1 } as CartItem));
+      Toast.show({
+        type: 'success',
+        text1: 'Товар додано до кошику',
+        visibilityTime: 2000,
+      });
+    }
   };
 
   return (
@@ -76,7 +100,15 @@ const Item: React.FC<ItemPropss> = ({
           <CustomPressable
             style={styles.basketBox}
             onPress={() => {
-              console.warn('Add to basket');
+              handleAddToCart({
+                id,
+                title,
+                isNew,
+                image,
+                newPrice,
+                oldPrice,
+                description,
+              });
             }}>
             <Image style={styles.basketImage} source={basketImage} />
             <Text style={styles.basketText}>Buy</Text>

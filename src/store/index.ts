@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 import logger from 'redux-logger';
 
+import basketReducer from '../store/basket/basketSlice';
 import imagesReducer from '../store/carousel/carouselSlice';
 import productsReducer from '../store/products/productsSlice';
 import uiReducer from '../store/theme/themeSlice';
@@ -12,6 +13,7 @@ export const store = configureStore({
     user: userReducer,
     carouselImages: imagesReducer,
     products: productsReducer,
+    basket: basketReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

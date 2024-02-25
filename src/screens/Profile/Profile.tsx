@@ -1,5 +1,4 @@
-import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Text, TextInputProps, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 
@@ -7,7 +6,6 @@ import styles from './ProfileStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector';
 import {
-  fetchUserById,
   selectorFirstName,
   selectorFullName,
   selectorLastName,
@@ -36,16 +34,6 @@ const ProfileScreen = () => {
 
   const handleSetFirstNameChange: TextInputProps['onChangeText'] = (text) => dispatch(setFirstName(text));
   const handleSetLastNameChange: TextInputProps['onChangeText'] = (text) => dispatch(setLastName(text));
-
-  useFocusEffect(
-    useCallback(() => {
-      const promise = dispatch(fetchUserById(1));
-
-      return () => {
-        promise.abort();
-      };
-    }, []),
-  );
 
   return (
     <View style={styles.container}>
