@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 
 import styles from './BasketStyles';
@@ -21,12 +22,17 @@ const BasketScreen = () => {
 
   const handleClearBasket = () => {
     dispatch(clearCart());
+    Toast.show({
+      type: 'error',
+      text1: 'Кошик очищено',
+      visibilityTime: 2000,
+    });
   };
 
   return (
     <View style={styles.container}>
       {basketItems.length === 0 ? (
-        <Text style={styles.screenTitle}>Ваша корзина пуста</Text>
+        <Text style={styles.screenTitle}>Ваш кошик порожнiй</Text>
       ) : (
         <View style={styles.flatlistParent}>
           <FlatList

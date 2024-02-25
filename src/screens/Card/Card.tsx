@@ -20,11 +20,17 @@ const mapStateToProps = (state: RootState) => ({
 const CardScreen = ({ route, items }: Props) => {
   return (
     <View style={styles.details}>
-      <Item itemData={route.params.item} numberOfLines={0} styles={styles.itemDetails} />
+      <Item
+        itemData={route.params.item}
+        numberOfLines={0}
+        styles={styles.itemDetails}
+        isInBasket={false}
+        isInFavorites={false}
+      />
 
       <Text style={styles.screenTitle}>Product Popular</Text>
-      <Item itemData={items[1]} />
-      <Item itemData={items[9]} />
+      <Item itemData={items[1]} isInBasket={false} isInFavorites={false} />
+      <Item itemData={items[9]} isInBasket={false} isInFavorites={false} />
     </View>
   );
 };

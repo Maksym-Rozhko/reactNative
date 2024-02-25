@@ -14,7 +14,6 @@ import { addItemToFavorites, removeItemFromFavorites } from '../../store/favorit
 import { CustomPressable } from '../CustomPressable/CustomPressable';
 
 const basketImage = require('../../../assets/basket.png');
-const likeImage = require('../../../assets/like.png');
 
 interface ItemData {
   id: string;
@@ -31,6 +30,7 @@ interface ItemPropss {
   numberOfLines?: number;
   styles?: object;
   isInBasket: boolean;
+  isInFavorites: boolean;
 }
 
 const Item: React.FC<ItemPropss> = ({
@@ -38,6 +38,7 @@ const Item: React.FC<ItemPropss> = ({
   numberOfLines = 1,
   styles: itemDetails,
   isInBasket,
+  isInFavorites,
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const dispatch = useDispatch();
@@ -124,7 +125,7 @@ const Item: React.FC<ItemPropss> = ({
             description,
           });
         }}>
-        <Ionicons name="heart" size={20} color={isFavorite ? 'red' : '#fff'} />
+        <Ionicons name="heart" size={20} color={isFavorite || isInFavorites ? 'red' : '#fff'} />
       </CustomPressable>
       <View style={styles.itemImageBox}>
         <Image
