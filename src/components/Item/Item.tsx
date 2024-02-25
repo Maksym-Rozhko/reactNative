@@ -1,3 +1,4 @@
+import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
@@ -8,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './ItemStyles';
 import { HomeStackParamList } from '../../navigation/native-stack';
 import { RootState } from '../../store';
-import { CartItem, addItemToCart } from '../../store/basket/basketSlice';
+import { CartItem, addItemToCart, removeAllItemFromCart, removeItemFromCart } from '../../store/basket/basketSlice';
 import { addItemToFavorites, removeItemFromFavorites } from '../../store/favorites/favoritesSlice';
 import { CustomPressable } from '../CustomPressable/CustomPressable';
 
@@ -29,17 +30,20 @@ interface ItemPropss {
   itemData: ItemData;
   numberOfLines?: number;
   styles?: object;
+  isInBasket: boolean;
 }
 
 const Item: React.FC<ItemPropss> = ({
   itemData: { id, title, isNew, image, newPrice, oldPrice, description },
   numberOfLines = 1,
   styles: itemDetails,
+  isInBasket,
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.basket.cartItems);
   const favorites = useSelector((state: RootState) => state.favorites.cartItems);
+  const [isFavorite, setIsFavorite] = React.useState(false);
 
   const handlePressShowDetails = () => {
     navigation.navigate('Product', {
@@ -66,10 +70,29 @@ const Item: React.FC<ItemPropss> = ({
     }
   };
 
+  const handleRemoveFromCart = () => {
+    dispatch(removeItemFromCart(id));
+    Toast.show({
+      type: 'info',
+      text1: 'Кiлькiсть одиниць зменшено',
+      visibilityTime: 2000,
+    });
+  };
+
+  const handleRemoveAllFromCart = () => {
+    dispatch(removeAllItemFromCart(id));
+    Toast.show({
+      type: 'error',
+      text1: 'Товар видалено з кошику',
+      visibilityTime: 2000,
+    });
+  };
+
   const handleToggleFavorite = (item: ItemData) => {
     const existingItem = favorites.find((cartItem) => cartItem.id === item.id);
     if (existingItem) {
       dispatch(removeItemFromFavorites(id));
+      setIsFavorite(false);
       Toast.show({
         type: 'success',
         text1: 'Товар видаленно з обраних',
@@ -77,6 +100,7 @@ const Item: React.FC<ItemPropss> = ({
       });
     } else {
       dispatch(addItemToFavorites(item));
+      setIsFavorite(true);
       Toast.show({
         type: 'success',
         text1: 'Товар додано до обраних',
@@ -100,7 +124,7 @@ const Item: React.FC<ItemPropss> = ({
             description,
           });
         }}>
-        <Image style={styles.likeImage} source={likeImage} />
+        <Ionicons name="heart" size={20} color={isFavorite ? 'red' : '#fff'} />
       </CustomPressable>
       <View style={styles.itemImageBox}>
         <Image
@@ -126,22 +150,33 @@ const Item: React.FC<ItemPropss> = ({
           <Text style={styles.description} numberOfLines={numberOfLines}>
             {description}
           </Text>
-          <CustomPressable
-            style={styles.basketBox}
-            onPress={() => {
-              handleAddToCart({
-                id,
-                title,
-                isNew,
-                image,
-                newPrice,
-                oldPrice,
-                description,
-              });
-            }}>
-            <Image style={styles.basketImage} source={basketImage} />
-            <Text style={styles.basketText}>Buy</Text>
-          </CustomPressable>
+          {!isInBasket ? (
+            <CustomPressable
+              style={styles.basketBox}
+              onPress={() => {
+                handleAddToCart({ id, title, isNew, image, newPrice, oldPrice, description });
+              }}>
+              <Image style={styles.basketImage} source={basketImage} />
+              <Text style={styles.basketText}>Buy</Text>
+            </CustomPressable>
+          ) : (
+            <View style={styles.counter}>
+              <CustomPressable style={styles.counterBtn} onPress={handleRemoveFromCart}>
+                <Text>-</Text>
+              </CustomPressable>
+              <Text style={styles.counterNumber}>{cartItems.find((item) => item.id === id)?.quantity || ''}</Text>
+              <CustomPressable
+                style={styles.counterBtn}
+                onPress={() => {
+                  handleAddToCart({ id, title, isNew, image, newPrice, oldPrice, description });
+                }}>
+                <Text>+</Text>
+              </CustomPressable>
+              <CustomPressable style={styles.counterBtnRemove} onPress={handleRemoveAllFromCart}>
+                <Ionicons name="trash" size={15} color="#fff" />
+              </CustomPressable>
+            </View>
+          )}
         </View>
       </View>
     </CustomPressable>

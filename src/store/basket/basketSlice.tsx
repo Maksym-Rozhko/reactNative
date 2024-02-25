@@ -38,8 +38,22 @@ const basketSlice = createSlice({
       state.totalItems++;
     },
     removeItemFromCart(state, action: PayloadAction<string>) {
-      state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
-      state.totalItems--;
+      const itemToRemoveIndex = state.cartItems.findIndex((item) => item.id === action.payload);
+      if (itemToRemoveIndex !== -1) {
+        if (state.cartItems[itemToRemoveIndex].quantity > 1) {
+          state.cartItems[itemToRemoveIndex].quantity--;
+        } else {
+          state.cartItems.splice(itemToRemoveIndex, 1);
+        }
+        state.totalItems--;
+      }
+    },
+    removeAllItemFromCart(state, action: PayloadAction<string>) {
+      const itemToRemove = state.cartItems.find((item) => item.id === action.payload);
+      if (itemToRemove) {
+        state.totalItems -= itemToRemove.quantity;
+        state.cartItems = state.cartItems.filter((item) => item.id !== action.payload);
+      }
     },
     clearCart(state) {
       state.cartItems = [];
@@ -48,5 +62,5 @@ const basketSlice = createSlice({
   },
 });
 
-export const { addItemToCart, removeItemFromCart, clearCart } = basketSlice.actions;
+export const { addItemToCart, removeItemFromCart, removeAllItemFromCart, clearCart } = basketSlice.actions;
 export default basketSlice.reducer;
