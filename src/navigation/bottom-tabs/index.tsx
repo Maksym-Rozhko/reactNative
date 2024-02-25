@@ -33,6 +33,7 @@ type Props = CompositeScreenProps<
 
 export const TabsGroup = ({ navigation }: Props) => {
   const totalItemsInCart = useSelector((state: RootState) => state.basket.totalItems);
+  const totalItemsInFavorites = useSelector((state: RootState) => state.favorites.totalItems);
 
   return (
     <Tab.Navigator
@@ -90,7 +91,7 @@ export const TabsGroup = ({ navigation }: Props) => {
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? 'heart' : 'heart-sharp'} size={size} color={color} />
           ),
-          // tabBarBadge: 3,
+          tabBarBadge: totalItemsInFavorites || undefined,
         }}
       />
     </Tab.Navigator>

@@ -9,6 +9,7 @@ import styles from './ItemStyles';
 import { HomeStackParamList } from '../../navigation/native-stack';
 import { RootState } from '../../store';
 import { CartItem, addItemToCart } from '../../store/basket/basketSlice';
+import { addItemToFavorites, removeItemFromFavorites } from '../../store/favorites/favoritesSlice';
 import { CustomPressable } from '../CustomPressable/CustomPressable';
 
 const basketImage = require('../../../assets/basket.png');
@@ -38,6 +39,7 @@ const Item: React.FC<ItemPropss> = ({
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
   const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.basket.cartItems);
+  const favorites = useSelector((state: RootState) => state.favorites.cartItems);
 
   const handlePressShowDetails = () => {
     navigation.navigate('Product', {
@@ -64,12 +66,39 @@ const Item: React.FC<ItemPropss> = ({
     }
   };
 
+  const handleToggleFavorite = (item: ItemData) => {
+    const existingItem = favorites.find((cartItem) => cartItem.id === item.id);
+    if (existingItem) {
+      dispatch(removeItemFromFavorites(id));
+      Toast.show({
+        type: 'success',
+        text1: 'Товар видаленно з обраних',
+        visibilityTime: 2000,
+      });
+    } else {
+      dispatch(addItemToFavorites(item));
+      Toast.show({
+        type: 'success',
+        text1: 'Товар додано до обраних',
+        visibilityTime: 2000,
+      });
+    }
+  };
+
   return (
     <CustomPressable style={[styles.item, itemDetails]} onPress={handlePressShowDetails}>
       <CustomPressable
         style={styles.likeBox}
         onPress={() => {
-          console.warn('Add to favorite');
+          handleToggleFavorite({
+            id,
+            title,
+            isNew,
+            image,
+            newPrice,
+            oldPrice,
+            description,
+          });
         }}>
         <Image style={styles.likeImage} source={likeImage} />
       </CustomPressable>

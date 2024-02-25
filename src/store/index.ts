@@ -3,6 +3,7 @@ import logger from 'redux-logger';
 
 import basketReducer from '../store/basket/basketSlice';
 import imagesReducer from '../store/carousel/carouselSlice';
+import favoritesReducer from '../store/favorites/favoritesSlice';
 import productsReducer from '../store/products/productsSlice';
 import uiReducer from '../store/theme/themeSlice';
 import userReducer from '../store/user/userSlice';
@@ -14,6 +15,7 @@ export const store = configureStore({
     carouselImages: imagesReducer,
     products: productsReducer,
     basket: basketReducer,
+    favorites: favoritesReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
