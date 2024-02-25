@@ -1,8 +1,8 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { ModalScreen } from '../../components/Modal/NavigatorModal';
 import { CheckoutScreen } from '../../components/Checkout/Checkout';
+import { ModalScreen } from '../../components/Modal/NavigatorModal';
 import CardScreen from '../../screens/Card/Card';
 import { TabsGroup, TabsGroupParamList } from '../bottom-tabs';
 

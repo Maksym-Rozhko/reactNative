@@ -1,12 +1,12 @@
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 import styles from './FavoritesStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
 import { Item } from '../../components/Item/Item';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { RootState } from '../../store';
 import { clearFavorites } from '../../store/favorites/favoritesSlice';
 

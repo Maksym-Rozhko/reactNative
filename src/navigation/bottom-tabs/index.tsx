@@ -4,8 +4,8 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
-import { useAppSelector } from '../../hooks/useAppSelector';
 
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { BasketScreen } from '../../screens/Basket/Basket';
 import { Carousel } from '../../screens/Carousel/Carousel';
 import { FavoritesScreen } from '../../screens/Favorites/Favorites';

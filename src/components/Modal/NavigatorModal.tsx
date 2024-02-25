@@ -1,9 +1,9 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { useAppSelector } from '../../hooks/useAppSelector';
 
 import styles from './NavigatorModalStyles';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { RootState } from '../../store/';
 import { CustomPressable } from '../CustomPressable/CustomPressable';
 import { Item } from '../Item/Item';

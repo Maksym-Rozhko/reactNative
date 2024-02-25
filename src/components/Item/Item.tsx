@@ -4,9 +4,9 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector';
 
 import styles from './ItemStyles';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector';
 import { HomeStackParamList } from '../../navigation/native-stack';
 import { RootState } from '../../store';
 import { CartItem, addItemToCart, removeAllItemFromCart, removeItemFromCart } from '../../store/basket/basketSlice';

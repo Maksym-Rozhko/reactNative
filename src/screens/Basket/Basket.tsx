@@ -1,18 +1,19 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import { useAppDispatch } from '../../hooks/useAppDispatch';
-import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { HomeStackParamList } from '@/navigation/native-stack';
 
 import styles from './BasketStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
 import { Item } from '../../components/Item/Item';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useAppSelector } from '../../hooks/useAppSelector';
 import { RootState } from '../../store';
 import { clearCart } from '../../store/basket/basketSlice';
+
+import { HomeStackParamList } from '@/navigation/native-stack';
 
 const BasketScreen = () => {
   const basketItems = useAppSelector((state: RootState) => state.basket.cartItems);
