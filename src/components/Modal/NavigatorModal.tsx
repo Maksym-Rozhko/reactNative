@@ -1,7 +1,7 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 import styles from './NavigatorModalStyles';
 import { RootState } from '../../store/';
@@ -13,14 +13,13 @@ import { HomeStackParamList } from '@/navigation/native-stack';
 type Props = NativeStackScreenProps<HomeStackParamList, 'ModalScreen'>;
 
 const ModalScreen = ({ navigation }: Props) => {
-  const favorites = useSelector((state: RootState) => state.favorites.cartItems);
+  const favorites = useAppSelector((state: RootState) => state.favorites.cartItems);
 
   return (
     <View style={styles.container}>
       <CustomPressable style={styles.closeButton} onPress={navigation.goBack}>
         <Text style={styles.closeButtonText}>X</Text>
       </CustomPressable>
-      <Text style={styles.screenTitle}>Wish List</Text>
       <View style={styles.container}>
         {favorites.length === 0 ? (
           <Text style={styles.screenTitle}>Обранi порожнi</Text>

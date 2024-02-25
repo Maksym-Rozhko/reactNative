@@ -239,7 +239,7 @@ const HomeScreen = () => {
       <FlatList
         ref={flatListRef}
         data={filteredData}
-        renderItem={({ item }) => <Item itemData={item} />}
+        renderItem={({ item }) => <Item itemData={item} isInBasket={false} isInFavorites={false} />}
         refreshing={refreshing}
         onRefresh={onRefresh}
         onEndReached={loadMoreData}

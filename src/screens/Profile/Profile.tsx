@@ -4,7 +4,8 @@ import { TextInput } from 'react-native-gesture-handler';
 
 import styles from './ProfileStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
-import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 import {
   selectorFirstName,
   selectorFullName,

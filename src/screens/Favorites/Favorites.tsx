@@ -1,7 +1,8 @@
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
 
 import styles from './FavoritesStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
@@ -10,8 +11,8 @@ import { RootState } from '../../store';
 import { clearFavorites } from '../../store/favorites/favoritesSlice';
 
 const FavoritesScreen = () => {
-  const favorites = useSelector((state: RootState) => state.favorites.cartItems);
-  const dispatch = useDispatch();
+  const favorites = useAppSelector((state: RootState) => state.favorites.cartItems);
+  const dispatch = useAppDispatch();
 
   const handleClearFavorites = () => {
     dispatch(clearFavorites());

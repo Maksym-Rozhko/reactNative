@@ -4,7 +4,7 @@ import { DrawerScreenProps } from '@react-navigation/drawer';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Pressable } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useAppSelector';
 
 import { BasketScreen } from '../../screens/Basket/Basket';
 import { Carousel } from '../../screens/Carousel/Carousel';
@@ -32,8 +32,8 @@ type Props = CompositeScreenProps<
 >;
 
 export const TabsGroup = ({ navigation }: Props) => {
-  const totalItemsInCart = useSelector((state: RootState) => state.basket.totalItems);
-  const totalItemsInFavorites = useSelector((state: RootState) => state.favorites.totalItems);
+  const totalItemsInCart = useAppSelector((state: RootState) => state.basket.totalItems);
+  const totalItemsInFavorites = useAppSelector((state: RootState) => state.favorites.totalItems);
 
   return (
     <Tab.Navigator

@@ -2,6 +2,7 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { ModalScreen } from '../../components/Modal/NavigatorModal';
+import { CheckoutScreen } from '../../components/Checkout/Checkout';
 import CardScreen from '../../screens/Card/Card';
 import { TabsGroup, TabsGroupParamList } from '../bottom-tabs';
 
@@ -19,6 +20,7 @@ export type HomeStackParamList = {
     };
   };
   ModalScreen: undefined;
+  CheckoutScreen: undefined;
 };
 
 export const HomeStack = createNativeStackNavigator<HomeStackParamList>();
@@ -42,6 +44,7 @@ export const HomeStackGroup = () => {
         }}
       />
       <HomeStack.Screen name="ModalScreen" component={ModalScreen} options={{ presentation: 'modal' }} />
+      <HomeStack.Screen name="CheckoutScreen" component={CheckoutScreen} options={{ presentation: 'modal' }} />
     </HomeStack.Navigator>
   );
 };

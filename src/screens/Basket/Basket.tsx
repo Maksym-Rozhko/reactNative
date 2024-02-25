@@ -2,7 +2,11 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAppDispatch } from '../../hooks/useAppDispatch';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { HomeStackParamList } from '@/navigation/native-stack';
 
 import styles from './BasketStyles';
 import { CustomPressable } from '../../components/CustomPressable/CustomPressable';
@@ -11,8 +15,9 @@ import { RootState } from '../../store';
 import { clearCart } from '../../store/basket/basketSlice';
 
 const BasketScreen = () => {
-  const basketItems = useSelector((state: RootState) => state.basket.cartItems);
-  const dispatch = useDispatch();
+  const basketItems = useAppSelector((state: RootState) => state.basket.cartItems);
+  const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
+  const dispatch = useAppDispatch();
 
   const totalAmount = basketItems
     .reduce((total, item) => {
@@ -37,7 +42,7 @@ const BasketScreen = () => {
         <View style={styles.flatlistParent}>
           <FlatList
             data={basketItems}
-            renderItem={({ item }) => <Item itemData={item} isInBasket />}
+            renderItem={({ item }) => <Item itemData={item} isInBasket isInFavorites={false} />}
             nestedScrollEnabled
             maxToRenderPerBatch={3}
             initialNumToRender={3}
@@ -49,7 +54,7 @@ const BasketScreen = () => {
             <CustomPressable onPress={handleClearBasket} style={styles.basketClearBtn}>
               <Text style={styles.basketClearBtnText}>Очистити кошик</Text>
             </CustomPressable>
-            <CustomPressable onPress={handleClearBasket} style={styles.basketToCheckout}>
+            <CustomPressable onPress={() => navigation.navigate('CheckoutScreen')} style={styles.basketToCheckout}>
               <Text style={styles.basketToCheckoutText}>Оформити замовлення</Text>
             </CustomPressable>
           </View>

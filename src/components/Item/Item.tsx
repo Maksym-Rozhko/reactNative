@@ -4,7 +4,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import Toast from 'react-native-toast-message';
-import { useDispatch, useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/useAppSelector';
 
 import styles from './ItemStyles';
 import { HomeStackParamList } from '../../navigation/native-stack';
@@ -41,9 +41,9 @@ const Item: React.FC<ItemPropss> = ({
   isInFavorites,
 }) => {
   const navigation = useNavigation<NativeStackNavigationProp<HomeStackParamList>>();
-  const dispatch = useDispatch();
-  const cartItems = useSelector((state: RootState) => state.basket.cartItems);
-  const favorites = useSelector((state: RootState) => state.favorites.cartItems);
+  const dispatch = useAppDispatch();
+  const cartItems = useAppSelector((state: RootState) => state.basket.cartItems);
+  const favorites = useAppSelector((state: RootState) => state.favorites.cartItems);
   const [isFavorite, setIsFavorite] = React.useState(false);
 
   const handlePressShowDetails = () => {
