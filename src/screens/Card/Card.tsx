@@ -3,22 +3,30 @@ import { Text, View } from 'react-native';
 
 import styles from './CardStyles';
 import { Item } from '../../components/Item/Item';
-import { mockItemData } from '../Home/HomeScreen';
 
 import { HomeStackParamList } from '@/navigation/native-stack';
+import { RootState } from '@/store';
+import { ItemData } from '../../store/products/productsSlice';
+import { connect } from 'react-redux';
 
-type Props = NativeStackScreenProps<HomeStackParamList, 'Product'>;
+type Props = NativeStackScreenProps<HomeStackParamList, 'Product'> & {
+  items: ItemData[]; 
+};
 
-const CardScreen = ({ route }: Props) => {
+const mapStateToProps = (state: RootState) => ({
+  items: state.products,
+});
+
+const CardScreen = ({ route, items }: Props) => {
   return (
     <View style={styles.details}>
       <Item itemData={route.params.item} numberOfLines={0} styles={styles.itemDetails} />
 
       <Text style={styles.screenTitle}>Product Popular</Text>
-      <Item itemData={mockItemData[1]} />
-      <Item itemData={mockItemData[9]} />
+      <Item itemData={items[1]} />
+      <Item itemData={items[9]} />
     </View>
   );
 };
 
-export { CardScreen };
+export default connect(mapStateToProps)(CardScreen);
