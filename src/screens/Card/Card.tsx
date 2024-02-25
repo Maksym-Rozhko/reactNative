@@ -1,16 +1,16 @@
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Text, View } from 'react-native';
+import { connect } from 'react-redux';
 
 import styles from './CardStyles';
 import { Item } from '../../components/Item/Item';
+import { ItemData } from '../../store/products/productsSlice';
 
 import { HomeStackParamList } from '@/navigation/native-stack';
 import { RootState } from '@/store';
-import { ItemData } from '../../store/products/productsSlice';
-import { connect } from 'react-redux';
 
 type Props = NativeStackScreenProps<HomeStackParamList, 'Product'> & {
-  items: ItemData[]; 
+  items: ItemData[];
 };
 
 const mapStateToProps = (state: RootState) => ({
