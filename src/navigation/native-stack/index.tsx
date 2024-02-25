@@ -1,9 +1,10 @@
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+import { TabsGroup, TabsGroupParamList } from '../bottom-tabs';
+
 import { ModalScreen } from '../../components/Modal/NavigatorModal';
 import { CardScreen } from '../../screens/Card/Card';
-import { TabsGroup, TabsGroupParamList } from '../bottom-tabs';
 
 export type HomeStackParamList = {
   TabsGroup: NavigatorScreenParams<TabsGroupParamList>;
@@ -15,7 +16,7 @@ export type HomeStackParamList = {
       image: string;
       newPrice: string;
       oldPrice: string;
-      description: string;
+      descriotion: string;
     };
   };
   ModalScreen: undefined;

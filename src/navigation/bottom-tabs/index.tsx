@@ -1,15 +1,10 @@
-import { Entypo, Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { DrawerScreenProps } from '@react-navigation/drawer';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Pressable } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
+import { CustomIcon } from '../../components/CustomIconSvg/CustomIconSvg';
 import { Carousel } from '../../screens/Carousel/Carousel';
 import { HomeScreen } from '../../screens/Home/HomeScreen';
 import { ProfileScreen } from '../../screens/Profile/Profile';
-import { DrawerParamList } from '../drawer';
-import { HomeStackParamList } from '../native-stack';
 
 export type TabsGroupParamList = {
   Home: undefined;
@@ -17,41 +12,24 @@ export type TabsGroupParamList = {
   Profile: undefined;
 };
 
-const Tab = createBottomTabNavigator<TabsGroupParamList>();
+const Tab = createBottomTabNavigator();
 
-type Props = CompositeScreenProps<
-  NativeStackScreenProps<HomeStackParamList, 'TabsGroup'>,
-  DrawerScreenProps<DrawerParamList>
->;
-
-export const TabsGroup = ({ navigation }: Props) => {
+export const TabsGroup = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarActiveTintColor: '#5e961a',
-        tabBarInactiveTintColor: 'black',
+        tabBarInactiveTintColor: '#fff',
+        tabBarStyle: { backgroundColor: 'rgba(255, 255, 255, 0.15)', borderTopColor: 'transparent' },
+        tabBarLabel: '',
+        headerTitle: '',
+        headerShown: false,
       }}>
       <Tab.Screen
         name="Home"
         component={Carousel}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'home' : 'home-outline'} size={size} color={color} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Products"
-        component={HomeScreen}
-        options={{
-          headerTitle: '',
-          headerLeft: () => (
-            <Pressable onPress={navigation.openDrawer}>
-              <Entypo name="menu" size={24} color="black" />
-            </Pressable>
-          ),
-          tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'storefront' : 'storefront-outline'} size={size} color={color} />
+            <CustomIcon iconName="home" size={size} color={color} focused={focused} />
           ),
         }}
       />
@@ -60,9 +38,22 @@ export const TabsGroup = ({ navigation }: Props) => {
         component={ProfileScreen}
         options={{
           tabBarIcon: ({ color, size, focused }) => (
-            <Ionicons name={focused ? 'person' : 'person-sharp'} size={size} color={color} />
+            <CustomIcon iconName="profile" size={size} color={color} focused={focused} />
           ),
           //   tabBarBadge: 3,
+        }}
+      />
+      <Tab.Screen
+        name="Product"
+        component={HomeScreen}
+        options={{
+          tabBarIcon: ({ size }) => (
+            <Svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+              <Path d="M6.25 8H18.75" stroke="#BC1B26" strokeWidth="1.5" strokeLinecap="round" />
+              <Path d="M6.25 12H18.75" stroke="#BC1B26" strokeWidth="1.5" strokeLinecap="round" />
+              <Path d="M6.25 16H18.75" stroke="#BC1B26" strokeWidth="1.5" strokeLinecap="round" />
+            </Svg>
+          ),
         }}
       />
     </Tab.Navigator>
