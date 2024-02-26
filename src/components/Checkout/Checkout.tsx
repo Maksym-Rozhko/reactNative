@@ -43,6 +43,7 @@ const CheckoutScreen = ({ navigation }: Props) => {
       comment,
       basketItems,
       totalAmount,
+      status: 'Processing',
     };
 
     dispatch(placeOrder(orderData));
@@ -62,7 +63,7 @@ const CheckoutScreen = ({ navigation }: Props) => {
 
     navigation.reset({
       index: 0,
-      routes: [{ name: 'TabsGroup' }],
+      routes: [{ name: 'Profile' }],
     });
 
     return () => clearTimeout(timeout);

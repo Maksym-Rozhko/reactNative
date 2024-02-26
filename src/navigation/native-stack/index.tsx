@@ -19,6 +19,7 @@ export type HomeStackParamList = {
       description: string;
     };
   };
+  Profile: undefined;
   ModalScreen: undefined;
   CheckoutScreen: undefined;
 };

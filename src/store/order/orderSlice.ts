@@ -6,12 +6,36 @@ interface OrderState {
   order: any;
   loading: boolean;
   error: string | null;
+  orderHistory: any[];
 }
-
 const initialState: OrderState = {
   order: null,
   loading: false,
   error: null,
+  orderHistory: [
+    {
+      id: '1357393-2158',
+      deliveryType: 'standard',
+      address: 'Lviv',
+      name: 'Max',
+      surname: 'Rozhko',
+      paymentMethod: 'cash',
+      comment: 'Test cancel order',
+      totalAmount: '490',
+      status: 'Canceled',
+    },
+    {
+      id: '136393-2158',
+      deliveryType: 'standard',
+      address: 'Odesa',
+      name: 'Max',
+      surname: 'Rozhko',
+      paymentMethod: 'cash',
+      comment: 'Test order',
+      totalAmount: '1050',
+      status: 'Done',
+    },
+  ],
 };
 
 const orderSlice = createSlice({
@@ -31,10 +55,13 @@ const orderSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+    saveOrderHistory: (state, action: PayloadAction<any[]>) => {
+      state.orderHistory = action.payload;
+    },
   },
 });
 
-export const { placeOrderRequest, placeOrderSuccess, placeOrderFailure } = orderSlice.actions;
+export const { placeOrderRequest, placeOrderSuccess, placeOrderFailure, saveOrderHistory } = orderSlice.actions;
 
 export default orderSlice.reducer;
 
@@ -43,7 +70,10 @@ export const placeOrder = (orderData: any) => async (dispatch: AppDispatch, getS
     dispatch(placeOrderRequest());
     const order = orderData;
     dispatch(placeOrderSuccess(order));
+    dispatch(saveOrderHistory([...getState().order.orderHistory, orderData]));
   } catch (error: any) {
     dispatch(placeOrderFailure(error.message));
   }
 };
+
+export const selectOrderHistory = (state: RootState) => state.order.orderHistory;

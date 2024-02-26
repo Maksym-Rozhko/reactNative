@@ -69,6 +69,7 @@ export const TabsGroup = ({ navigation }: Props) => {
         name="Profile"
         component={ProfileScreen}
         options={{
+          headerShown: false,
           tabBarIcon: ({ color, size, focused }) => (
             <Ionicons name={focused ? 'person' : 'person-sharp'} size={size} color={color} />
           ),
